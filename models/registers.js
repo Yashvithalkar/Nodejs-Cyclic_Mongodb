@@ -29,7 +29,11 @@ const employeeSchema = new mongoose.Schema({
  confirmpassword: {
     type : String,
     require : true
- }
+ },
+ bio: {
+   type : String,
+   require : true
+}
 
 
 })

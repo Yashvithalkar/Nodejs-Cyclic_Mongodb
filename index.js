@@ -107,6 +107,7 @@ app.get("/", (req,res) => {
                   email : req.body.email ,
                   // gender : req.body.gender ,
                   age : req.body.age ,
+                  bio : req.body.bio ,
                   password : password ,
                   confirmpassword : cpassword
                  })
