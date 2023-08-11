@@ -39,7 +39,7 @@ app.get('/add-note', async (req,res) => {
   try {
     await Book.insertMany([
       {
-        title: "Sons Of Anarchy",
+        title: "bajoriya",
         body: "Body text goes here...",
       },
       {
