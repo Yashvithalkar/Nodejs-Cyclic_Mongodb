@@ -3,8 +3,11 @@ require('dotenv').config();
 const express = require('express')
 const mongoose = require('mongoose')
 const Book = require("./models/books");
+const Register = require("./models/registers");
+
 const path = require("path");
 const hbs = require("hbs");
+const { json } = require("express"); // It allows you to extract specific properties or functions from an object . eg  req.body.firstname
 
 
 
@@ -15,6 +18,9 @@ const PORT = process.env.PORT || 3000
 const static_path = path.join(__dirname,"./public");
 const template_path = path.join(__dirname,"./template/views");
 const partials_path = path.join(__dirname,"./template/partials");
+
+app.use(express.json()); // use json from const { json } = require("express"); 
+app.use(express.urlencoded({extended:false}));
 
 
 app.use(express.static(static_path));
@@ -82,6 +88,42 @@ app.get("/", (req,res) => {
     res.render("register")
     
     });
+
+
+    app.post("/register", async(req,res) => {
+ 
+      try{
+          // console.log(req.body.firstname);
+          // res.send(req.body.firstname)
+          
+             const password = req.body.password ;
+             const cpassword = req.body.confirmpassword ;
+
+              if(password === cpassword){
+                  
+                 const registerEmployee = new Register({
+                  firstname : req.body.firstname ,
+                  lastname  : req.body.lastname ,
+                  email : req.body.email ,
+                  // gender : req.body.gender ,
+                  age : req.body.age ,
+                  password : password ,
+                  confirmpassword : cpassword
+                 })
+               
+              const registered = await   registerEmployee.save(); 
+               res.status(201).render("index");
+              }
+              else{ 
+                  res.send("password are not matching")
+              }
+
+      }catch(error){
+         res.status(400).send(error);
+      }
+      });
+
+
 
 //Connect to the database before listening
 connectDB().then(() => {
